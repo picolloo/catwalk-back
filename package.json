@@ -4,7 +4,8 @@
   "description": "Backend for the Catwalk challenge.",
   "main": "index.js",
   "scripts": {
-    "start": "",
+    "start": "node dist/server.js",
+    "build": "babel src --out-dir dist",
     "dev": "nodemon --exec babel-node src/server.js"
   },
   "repository": {
