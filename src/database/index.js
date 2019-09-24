@@ -1,12 +1,12 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 /**
  *  Creates the Mongoose model from Model directory files
  */
-const createMongoModel = async (modelName: string, modelDir: string) => {
+const createMongoModel = async (modelName, modelDir) => {
   const model = await import(path.resolve(modelDir, modelName));
 
   const schema = new mongoose.Schema(model);
@@ -14,7 +14,7 @@ const createMongoModel = async (modelName: string, modelDir: string) => {
   return mongoose.model(modelName, schema);
 };
 
-const initDatabase = async (modelsDir: string, databaseUri: string) => {
+const initDatabase = async (modelsDir, databaseUri) => {
   try {
     mongoose.connect(databaseUri, { useNewUrlParser: true });
 
@@ -23,7 +23,7 @@ const initDatabase = async (modelsDir: string, databaseUri: string) => {
     const files = fs.readdirSync(modelsDir);
 
     files.forEach(async file => {
-      const fileName = file.replace(/\.(j|t)s$/, '');
+      const fileName = file.replace(/\.js$/, '');
 
       db[fileName] = await createMongoModel(fileName, modelsDir);
 
