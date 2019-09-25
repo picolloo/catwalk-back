@@ -1,19 +1,18 @@
-import Koa from "koa";
-import dotenv from "dotenv";
+import Koa from 'koa';
+import dotenv from 'dotenv';
+import json from 'koa-json';
+import logger from 'koa-logger';
+import bodyParser from 'koa-bodyparser';
+
+import router from './routes';
+import initDatabase from './database';
+
 dotenv.config();
-
-import logger from "koa-logger";
-import json from "koa-json";
-import bodyParser from "koa-bodyparser";
-
-import router from "./routes";
-import initDatabase from "./database";
-
 const PORT = process.env.PORT || 3000;
 
 const app = new Koa();
 
-app.on("error", err => {
+app.on('error', (err, ctx) => {
   console.error(err.stack);
   console.log(err.message);
 });

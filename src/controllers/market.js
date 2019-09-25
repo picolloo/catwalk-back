@@ -1,4 +1,4 @@
-import Market from "../models/Market";
+import Market from '../models/Market';
 
 /**
  * Get all markets
@@ -11,20 +11,11 @@ const find = async ctx => (ctx.body = await Market.find());
  * @param {ctx} Koa Context
  */
 const findById = async ctx => {
-  try {
-    const market = await Market.findById(ctx.params.id);
+  const market = await Market.findById(ctx.params.id);
 
-    if (!market) {
-      ctx.throw(404);
-    }
+  ctx.assert(market, 404, 'Market not found.');
 
-    ctx.body = market;
-  } catch (err) {
-    if (err.name === "CastError" || err.name === "NotFoundError") {
-      ctx.throw(404);
-    }
-    ctx.throw(500);
-  }
+  ctx.body = market;
 };
 
 /**
@@ -44,24 +35,14 @@ const add = async ctx => {
  * @param {ctx} Koa Context
  */
 const update = async ctx => {
-  try {
-    const market = await Market.findByIdAndUpdate(
-      ctx.params.id,
-      ctx.request.body
-    );
+  const market = await Market.findByIdAndUpdate(
+    ctx.params.id,
+    ctx.request.body
+  );
 
-    if (!market) {
-      ctx.throw(404);
-    }
+  ctx.assert(market, 404, 'Market not found.');
 
-    ctx.body = market;
-  } catch (err) {
-    if (err.name === "CastError" || err.name === "NotFoundError") {
-      ctx.throw(404);
-    }
-
-    ctx.throw(500);
-  }
+  ctx.body = market;
 };
 
 /**
@@ -69,20 +50,11 @@ const update = async ctx => {
  * @param {ctx} Koa Context
  */
 const remove = async ctx => {
-  try {
-    const market = await Market.findByIdAndRemove(ctx.params.id);
+  const market = await Market.findByIdAndRemove(ctx.params.id);
 
-    if (!market) {
-      ctx.throw(404);
-    }
+  ctx.assert(market, 404, 'Market not found.');
 
-    ctx.body = market;
-  } catch (err) {
-    if (err.name === "CastError" || err.name === "NotFound") {
-      ctx.throw(404);
-    }
-    ctx.throw(500);
-  }
+  ctx.body = market;
 };
 
 export default {
