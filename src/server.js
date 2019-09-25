@@ -11,7 +11,12 @@ import initDatabase from "./database";
 
 const app = new Koa();
 
-app.use(initDatabase(process.env.DATABASE_URI));
+app.on("error", err => {
+  console.error(err.stack);
+  console.log(err.message);
+});
+
+initDatabase(process.env.DATABASE_URI);
 
 // Middlewares
 app

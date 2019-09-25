@@ -1,19 +1,16 @@
 import mongoose from "mongoose";
 
-import Market from "./models/Market";
-
 export default async databaseUri => {
-  try {
-    mongoose.connect(databaseUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+  mongoose.connect(databaseUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
-    return async (ctx, next) => {
-      ctx.Market = Market;
-      await next();
-    };
-  } catch (err) {
-    throw new Error("Error trying to connect to MongoDB");
-  }
+  mongoose.connection.on("connected", () => {
+    console.log("Mongoose default connection successfully established");
+  });
+
+  mongoose.connection.on("error", err => {
+    console.log("Mongoose default connection error: " + err);
+  });
 };
