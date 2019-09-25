@@ -4,12 +4,14 @@ import MarketController from "../controllers/market";
 
 const router = new Router();
 
-router.get("/", async (ctx, next) => {
-  ctx.body = ctx.request.body;
+router.get("/", MarketController.find);
 
-  await next();
-});
+router.get("/:id", MarketController.findById);
 
 router.post("/", MarketController.add);
+
+router.delete("/:id", MarketController.remove);
+
+router.put("/:id", MarketController.update);
 
 export default router;
