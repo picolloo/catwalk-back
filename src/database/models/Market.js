@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export default {
+const MarketSchema = new mongoose.Schema({
   name: { type: String, required: true },
   location: {
     street: { type: String, required: true },
@@ -13,4 +13,6 @@ export default {
   },
   description: String,
   phone: { type: Number, required: true }
-};
+});
+
+export default mongoose.model("Market", MarketSchema);
