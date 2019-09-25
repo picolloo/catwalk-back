@@ -9,6 +9,8 @@ import bodyParser from "koa-bodyparser";
 import router from "./routes";
 import initDatabase from "./database";
 
+const PORT = process.env.PORT || 3000;
+
 const app = new Koa();
 
 app.on("error", err => {
@@ -26,4 +28,4 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-app.listen(3000, () => console.log("Server bound to port 3000"));
+app.listen(PORT, () => console.log(`Server bound to port ${PORT}`));
