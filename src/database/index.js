@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export default async databaseUri => {
+export default async (app, databaseUri) => {
   try {
     mongoose.connect(databaseUri, {
       useNewUrlParser: true,

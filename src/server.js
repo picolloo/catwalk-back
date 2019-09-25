@@ -9,9 +9,9 @@ import bodyParser from "koa-bodyparser";
 import router from "./routes";
 import initDatabase from "./database";
 
-initDatabase(process.env.DATABASE_URI);
-
 const app = new Koa();
+
+initDatabase(app, process.env.DATABASE_URI);
 
 // Middlewares
 app
