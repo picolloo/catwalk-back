@@ -2,7 +2,7 @@ import Koa from 'koa';
 import dotenv from 'dotenv';
 import json from 'koa-json';
 import logger from 'koa-logger';
-import bodyParser from 'koa-bodyparser';
+import bodyParser from 'koa-body';
 
 import router from './routes';
 import initDatabase from './database';
@@ -23,7 +23,7 @@ initDatabase(process.env.DATABASE_URI);
 app
   .use(json())
   .use(logger())
-  .use(bodyParser())
+  .use(bodyParser({ multipart: true }))
   .use(router.routes())
   .use(router.allowedMethods());
 
