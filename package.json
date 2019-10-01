@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/picolloo/catwalk-back#readme",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-polyfill": "^6.26.0",

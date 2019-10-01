@@ -1,5 +1,6 @@
 import Koa from "koa";
 import dotenv from "dotenv";
+import cors from "@koa/cors";
 dotenv.config();
 
 import logger from "koa-logger";
@@ -22,6 +23,7 @@ initDatabase(process.env.DATABASE_URI);
 
 // Middlewares
 app
+  .use(cors())
   .use(json())
   .use(logger())
   .use(bodyParser())

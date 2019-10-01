@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 const MarketSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  image: String,
+  extraImages: [String],
   // location: {
   //   street: { type: String, required: true },
   //   number: { type: Number, required: true },
