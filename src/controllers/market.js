@@ -1,4 +1,6 @@
-import Market from '../models/Market';
+import Market from "../models/Market";
+
+import storage from "../storage";
 
 /**
  * Get all markets
@@ -13,7 +15,7 @@ const find = async ctx => (ctx.body = await Market.find());
 const findById = async ctx => {
   const market = await Market.findById(ctx.params.id);
 
-  ctx.assert(market, 404, 'Market not found.');
+  ctx.assert(market, 404, "Market not found.");
 
   ctx.body = market;
 };
@@ -24,7 +26,27 @@ const findById = async ctx => {
  */
 const add = async ctx => {
   try {
-    ctx.body = await new Market(ctx.request.body).save();
+    // const { mainImage } = ctx.request.files;
+    // const { extraImages } = ctx.request.files;
+    // const { key, url } = await storage.uploadFile({
+    //   fileName: mainImage.name,
+    //   filePath: mainImage.path,
+    //   fileType: mainImage.type
+    // });
+    // const storedImages = Promise.all(
+    //   extraImages.map(img => {
+    //     return storage.uploadFile({
+    //       fileName: img.name,
+    //       filePath: img.path,
+    //       fileType: img.type
+    //     });
+    //   })
+    // );
+    // ctx.body = await new Market({
+    //   ...ctx.request.body,
+    //   mainImage: { key, url },
+    //   extraImages: storedImages.map(img => ({ key: img.key, url: img.url }))
+    // }).save();
   } catch (err) {
     ctx.throw(422);
   }
@@ -40,7 +62,7 @@ const update = async ctx => {
     ctx.request.body
   );
 
-  ctx.assert(market, 404, 'Market not found.');
+  ctx.assert(market, 404, "Market not found.");
 
   ctx.body = market;
 };
@@ -52,7 +74,7 @@ const update = async ctx => {
 const remove = async ctx => {
   const market = await Market.findByIdAndRemove(ctx.params.id);
 
-  ctx.assert(market, 404, 'Market not found.');
+  ctx.assert(market, 404, "Market not found.");
 
   ctx.body = market;
 };

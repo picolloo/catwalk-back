@@ -12,8 +12,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const app = new Koa();
-
-app.on("error", (err, ctx) => {
+app.on("error", err => {
   console.error(err.stack);
   console.log(err.message);
 });
