@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/picolloo/catwalk-back#readme",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "aws-sdk": "^2.538.0",
     "dotenv": "^8.1.0",
     "koa": "^2.8.1",

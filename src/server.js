@@ -1,5 +1,6 @@
 import Koa from "koa";
 import dotenv from "dotenv";
+import cors from "@koa/cors";
 import json from "koa-json";
 import logger from "koa-logger";
 import bodyParser from "koa-body";
