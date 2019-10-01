@@ -1,20 +1,18 @@
 import Koa from "koa";
 import dotenv from "dotenv";
-import cors from "@koa/cors";
-dotenv.config();
-
-import logger from "koa-logger";
 import json from "koa-json";
-import bodyParser from "koa-bodyparser";
+import logger from "koa-logger";
+import bodyParser from "koa-body";
 
 import router from "./routes";
 import initDatabase from "./database";
 
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const app = new Koa();
 
-app.on("error", err => {
+app.on("error", (err, ctx) => {
   console.error(err.stack);
   console.log(err.message);
 });
@@ -26,7 +24,7 @@ app
   .use(cors())
   .use(json())
   .use(logger())
-  .use(bodyParser())
+  .use(bodyParser({ multipart: true }))
   .use(router.routes())
   .use(router.allowedMethods());
 
