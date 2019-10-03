@@ -26,28 +26,34 @@ const findById = async ctx => {
  */
 const add = async ctx => {
   try {
-    // const { mainImage } = ctx.request.files;
-    // const { extraImages } = ctx.request.files;
-    // const { key, url } = await storage.uploadFile({
-    //   fileName: mainImage.name,
-    //   filePath: mainImage.path,
-    //   fileType: mainImage.type
-    // });
-    // const storedImages = Promise.all(
-    //   extraImages.map(img => {
-    //     return storage.uploadFile({
-    //       fileName: img.name,
-    //       filePath: img.path,
-    //       fileType: img.type
-    //     });
-    //   })
-    // );
-    // ctx.body = await new Market({
-    //   ...ctx.request.body,
-    //   mainImage: { key, url },
-    //   extraImages: storedImages.map(img => ({ key: img.key, url: img.url }))
-    // }).save();
+    const { mainImage } = ctx.request.files;
+    const extraImages = [...ctx.request.files.extraImages];
+
+    const { url } = await storage.uploadFile({
+      fileName: mainImage.name,
+      filePath: mainImage.path,
+      fileType: mainImage.type
+    });
+
+    const storedImages = await Promise.all(
+      extraImages.map(async img => {
+        const { url } = await storage.uploadFile({
+          fileName: img.name,
+          filePath: img.path,
+          fileType: img.type
+        });
+
+        return url;
+      })
+    );
+
+    ctx.body = await Market.create({
+      ...ctx.request.body,
+      mainImage: url,
+      extraImages: storedImages
+    });
   } catch (err) {
+    console.error(err);
     ctx.throw(422);
   }
 };

@@ -2,19 +2,19 @@ import mongoose from "mongoose";
 
 const MarketSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  image: String,
+  mainImage: String,
   extraImages: [String],
-  // location: {
-  //   street: { type: String, required: true },
-  //   number: { type: Number, required: true },
-  //   district: { type: String, required: true },
-  //   zip: { type: Number, required: true },
-  //   country: { type: String, required: true },
-  //   city: { type: String, required: true },
-  //   state: { type: String, required: true }
-  // },
+  location: {
+    street: String,
+    number: String,
+    district: String,
+    zip: String,
+    country: String,
+    city: String,
+    state: String
+  },
   description: String,
-  phone: { type: Number, required: true }
+  phone: Number
 });
 
 export default mongoose.model("Market", MarketSchema);

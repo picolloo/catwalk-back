@@ -1,6 +1,6 @@
 import Router from "koa-router";
 
-import MarketController from "../controllers/market";
+import MarketController from "../controllers/MarketController";
 
 const router = new Router();
 
