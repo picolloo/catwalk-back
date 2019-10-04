@@ -1,7 +1,5 @@
 import Market from "../models/Market";
 
-import storage from "../storage";
-
 /**
  * Get all markets
  * @param {ctx} Koa Context
@@ -26,32 +24,8 @@ const findById = async ctx => {
  */
 const add = async ctx => {
   try {
-    const { mainImage } = ctx.request.files;
-    const extraImages = [...ctx.request.files.extraImages];
-
-    const { url } = await storage.uploadFile({
-      fileName: mainImage.name,
-      filePath: mainImage.path,
-      fileType: mainImage.type
-    });
-
-    const storedImages = await Promise.all(
-      extraImages.map(async img => {
-        const { url } = await storage.uploadFile({
-          fileName: img.name,
-          filePath: img.path,
-          fileType: img.type
-        });
-
-        return url;
-      })
-    );
-
-    ctx.body = await Market.create({
-      ...ctx.request.body,
-      mainImage: url,
-      extraImages: storedImages
-    });
+    const market = await Market.create(ctx.request.body);
+    ctx.body = market;
   } catch (err) {
     console.error(err);
     ctx.throw(422);
