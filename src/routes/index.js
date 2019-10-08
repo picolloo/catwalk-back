@@ -5,16 +5,16 @@ import MarketController from "../controllers/MarketController";
 
 const router = new Router();
 
-router.get("/", MarketController.find);
+router.get("/", MarketController.index);
 
-router.get("/:id", MarketController.findById);
+router.get("/:id", MarketController.show);
 
-router.post("/", MarketController.add);
+router.post("/", MarketController.store);
 
-router.delete("/:id", MarketController.remove);
+router.delete("/:id", MarketController.destroy);
 
 router.put("/:id", MarketController.update);
 
-router.post("/upload", FileController.handleUpload);
+router.post("/upload", FileController.store);
 
 export default router;

@@ -4,29 +4,26 @@ import storage from "../storage";
  * Upload a file to the storage
  * @param {ctx} Koa Context
  */
-
-const handleUpload = async ctx => {
+const store = async ctx => {
   try {
-    if (ctx.request.files) {
-      const { file } = ctx.request.files;
-      const url = await uploadFile(file);
-      ctx.body = url;
-    }
+    const urls = await Promise.all(
+      Object.values(ctx.request.files).map(async image => {
+        const { url } = await storage.uploadFile({
+          fileName: image.name,
+          filePath: image.path,
+          fileType: image.type
+        });
+
+        return url;
+      })
+    );
+
+    ctx.body = urls;
   } catch (err) {
     ctx.throw(422);
   }
 };
 
-const uploadFile = async file => {
-  const { url } = await storage.uploadFile({
-    fileName: file.name,
-    filePath: file.path,
-    fileType: file.type
-  });
-
-  return url;
-};
-
 export default {
-  handleUpload
+  store
 };

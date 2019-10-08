@@ -4,13 +4,13 @@ import Market from "../models/Market";
  * Get all markets
  * @param {ctx} Koa Context
  */
-const find = async ctx => (ctx.body = await Market.find());
+const index = async ctx => (ctx.body = await Market.find());
 
 /**
  * Find a market
  * @param {ctx} Koa Context
  */
-const findById = async ctx => {
+const show = async ctx => {
   const market = await Market.findById(ctx.params.id);
 
   ctx.assert(market, 404, "Market not found.");
@@ -22,7 +22,7 @@ const findById = async ctx => {
  * Add a market
  * @param {ctx} Koa Context
  */
-const add = async ctx => {
+const store = async ctx => {
   try {
     const market = await Market.create(ctx.request.body);
     ctx.body = market;
@@ -51,7 +51,7 @@ const update = async ctx => {
  * Remove a market
  * @param {ctx} Koa Context
  */
-const remove = async ctx => {
+const destroy = async ctx => {
   const market = await Market.findByIdAndRemove(ctx.params.id);
 
   ctx.assert(market, 404, "Market not found.");
@@ -60,9 +60,9 @@ const remove = async ctx => {
 };
 
 export default {
-  find,
-  findById,
-  add,
+  index,
+  show,
+  store,
   update,
-  remove
+  destroy
 };
